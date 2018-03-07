@@ -2,7 +2,7 @@ pico-8 cartridge // http://www.pico-8.com
 version 16
 __lua__
 function _init()
-	print = debug.print
+ print = debug.print
 end
 -->8
 function _update60()
@@ -113,9 +113,9 @@ function debug.print(...)
  printh("\n")
  for v in all{...} do
   if type(v) == "table" then
-	 printh(debug.tstr(v))
+   printh(debug.tstr(v))
   elseif type(v) == "nil" then
-  	printh("nil")
+    printh("nil")
   else
    printh(v)
   end
