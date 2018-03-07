@@ -16,8 +16,10 @@ function _init()
 
 	p = player{
   pos={0, 0},
-  size={8, 8},
-  mass=.1,
+  size={8, 8},	
+		mass=.1,
+		friction={1, 0},
+		
 		sprite=1,
 	}
 
@@ -172,19 +174,20 @@ end
 physics.world = oop.class{
  bodies = {},
  gravity = 2,
- friction = 0,
 }
 function physics.world:update()
  for body in all(self.bodies) do
   if body.mass ~= 0 then
    body:shove{0, self.gravity}
+   if body.friction ~= 0 then
+    body:slow(body.friction)
+   end
    for body2 in all(self.bodies) do
     if body ~= body2 then
      body:checkcollided(body2)
     end
    end
    body:update()
-   body:applyfriction(self.friction)
   end
  end
 end
@@ -197,6 +200,7 @@ physics.body = oop.class{
  size = "req",
  vel = 	{0, 0},
  mass = 0,
+ friction = {0, 0},
  collisions = {false, false},
 }
 function physics.body:shove(vel)
@@ -210,36 +214,51 @@ function physics.body:update()
  end
  self.collisions = {false, false}
 end
-function physics.body:applyfriction(friction)
+function physics.body:slow(vel)
  for i=1,2 do
   if self.vel[i] > 0 then
-   self.vel[i] -= friction
+   self.vel[i] -= vel[i] * self.mass
    if self.vel[i] < 0 then
     self.vel[i] = 0
    end
   elseif self.vel[i] < 0 then
-   self.vel[i] += friction
+   self.vel[i] += vel[i] * self.mass
    if self.vel[i] > 0 then
     self.vel[i] = 0
    end
   end
  end
 end
+function physics.body:processcollision(i, body)
+ self.collisions[i] = true
+ if self.vel[i] >= 0 then
+  self.pos[i] = body.pos[i] - self.size[i]
+ else
+  self.pos[i] = body.pos[i] + body.size[i]
+ end
+ self.vel[i] = 0
+end
 function physics.body:checkcollided(body)
  local oldpos = tools.assign(self.pos)
  for i=1,2 do
   local pos = tools.assign(oldpos)
   pos[i] += self.vel[i]
-  if physics.collided({pos=pos, size=self.size}, body) then
-   self.collisions[i] = true
-   if self.vel[i] >= 0 then
-    self.pos[i] = body.pos[i] - self.size[i]
-   else
-    self.pos[i] = body.pos[i] + body.size[i]
-   end
-   self.vel[i] = 0
+  if self:collided(body, pos) then
+   self:processcollision(i, body)
   end
  end
+ if not self.collisions[1] and not self.collisions[2] and
+  self:collided(body,
+   {oldpos[1] + self.vel[1], oldpos[2] + self.vel[2]}
+  ) then
+  for i=1,2 do
+   self:processcollision(i, body)
+  end
+ end
+end
+function physics.body:collided(body, pos)
+ pos = pos or self.pos
+ return physics.collided({pos=pos, size=self.size}, body)
 end
 __gfx__
 00000000888888880000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
