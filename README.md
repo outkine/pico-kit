@@ -55,7 +55,7 @@ A collection of helpers to make your life easier. Comes with four libraries:
 
 			Adds a body to the world and returns it.
 
-	* `physics.body{}`
+	* `physics.body(parameters) -> body`
 
 		A single physics body.
 
