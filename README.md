@@ -1,4 +1,4 @@
-# Pico-8 Toolkit :triangular_ruler:
+# Pico-Kit :triangular_ruler:
 
 A collection of helpers to make your life easier. Comes with four libraries:
 * oop
