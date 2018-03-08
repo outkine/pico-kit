@@ -89,3 +89,9 @@ A collection of helpers to make your life easier. Comes with four libraries:
 			 * Adds the provided body to `body.collisions`.
 			 * Adjusts the body's position on that axis to the edge of the provided object.
 			 * Sets that axis of the body's velocity to 0.
+
+## Setting up
+To use this library, just download the `starter.p8` file and open it in Pico. Check out `example.p8` for a little example game.
+
+## Contributing
+Suggested edits are welcome! Just create a pull request and make sure to edit both the starter and example files.
