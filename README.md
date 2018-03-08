@@ -68,7 +68,7 @@ A collection of helpers to make your life easier. Comes with four libraries:
 			* `friction={.1, 0}` applied with `body.slow` every `world.update` call, proportionally affects velocity
 			* `collisions={}` a list of object collisions, reset `world.update` call
 			* `static=false` a static object is ignored during `world.update`
-			* `layer=0x1` a binary field that represents collision layers. Every `world.update` call a `band` operation between two bodies' `layer` propreties determines whether they will be checked for a collision.
+			* `layer=0x1` a binary field that represents collision layers. Every `world.update` calls a `band` operation between two bodies' `layer` properties determines whether they will be checked for a collision.
 
 		* `physics.body:update()`
 
