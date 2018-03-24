@@ -169,7 +169,7 @@ function debug.print(...)
  printh("\n")
  for v in all{...} do
   if type(v) == "table" then
-   printh(debug.tstr(t))
+   printh(debug.tstr(v))
   elseif type(v) == "nil" then
     printh("nil")
   else
