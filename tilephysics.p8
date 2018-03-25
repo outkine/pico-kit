@@ -159,7 +159,7 @@ function body:gridcollided(world)
   for pos in all(tpos) do
   	tile = world:gettile(pos)
   	if tile then
-  		if band(self.layer, tile) then
+  		if band(self.layer, tile) != 0 then
    		self:align(i, {
    			pos=physics.fromgrid(pos),
    			size={8, 8}
@@ -178,7 +178,7 @@ function body:gridcollided(world)
  	for pos in all(tpos) do
   	tile = world:gettile(pos)
   	if tile then
-  		if band(self.layer, tile) then
+  		if band(self.layer, tile) != 0 then
    		for i=1,2 do
     		self:align(i, {
     			pos=physics.fromgrid(pos),
